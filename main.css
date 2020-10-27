@@ -21,7 +21,7 @@
 	cursor: pointer;
   background-color: #fff;
   border: 1px solid #e7e6e6;
-  border-bottom: none;
+  border-top: none;
   border-left: none;
  
 }
@@ -34,8 +34,8 @@
 }
 .uxd-441-category-item__head.active{
 	background-color: #fafafa;
-  border-top: 2px solid #3dcd58;
-  border-bottom: none;
+  border-bottom: 2px solid #3dcd58;
+  border-top: none;
 }
 /* .category-item{
 	display: none;
@@ -82,8 +82,8 @@
 .uxd-441-category-item__head.active{
   background-color: #fafafa;
   /*border-left: 1px solid #e7e6e6;*/
-  border-top: 2px solid #3dcd58;
-  border-bottom: none;
+  border-bottom: 2px solid #3dcd58;
+  border-top: none;
   /*margin-left: -2px;*/
   }
   .filters-left-hand-rail.categories.is-opened .category-item.is-active{
