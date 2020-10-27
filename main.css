@@ -17,7 +17,7 @@
 .tabs-container>div{
 	display: inline-block;
 }
-.tabs-container .category-item__head-clone-node{
+.tabs-container .uxd-441-category-item__head{
 	cursor: pointer;
   background-color: #fff;
   border: 1px solid #e7e6e6;
@@ -32,7 +32,7 @@
 	font-weight: 400;
   color: rgb(98,100,105);
 }
-.category-item__head-clone-node.active{
+.uxd-441-category-item__head.active{
 	background-color: #fafafa;
   border-top: 2px solid #3dcd58;
   border-bottom: none;
@@ -65,7 +65,7 @@
   /*overflow-x: scroll;
   padding-bottom: 50px;*/
 }
-.tabs-container .category-item__head-clone-node{
+.tabs-container .uxd-441-category-item__head{
   height: 50px;
   /*width: 100%;*/
   padding: 4px 10px;
@@ -79,7 +79,7 @@
   margin: 5px 5px 0 5px;
   margin-left: 0;
 }
-.category-item__head-clone-node.active{
+.uxd-441-category-item__head.active{
   background-color: #fafafa;
   /*border-left: 1px solid #e7e6e6;*/
   border-top: 2px solid #3dcd58;
