@@ -5,16 +5,17 @@ var UXD441 = {
 
     selectors: {
         allResultsContentSelector: '.se-col-md-12',
+        oldFilterSectionSelector: '.subcategory-item__body',
     },
 
     constants: {
-        tabsArray:["Alle Seite", "Produkte", "Unterlagen", "Software", "FAQ"],
+        tabsArray: ["Alle Seite", "Produkte", "Unterlagen", "Software", "FAQ"],
     },
 
     getNodes: function () {
         this.nodes = {
             allResultsContent: document.querySelector(this.selectors.allResultsContentSelector),
-
+            allOldFilters: document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes,
         };
     },
 
@@ -30,15 +31,61 @@ var UXD441 = {
         this.constants.tabsArray.forEach(function (elem, index) {
             var tabItem = document.createElement('div');
             var tabItemInner = document.createElement('h6');
-            tabItemInner.className = 'category-item__heading';
+            tabItemInner.className = 'uxd-441-category-item__heading';
             tabItemInner.innerText = elem;
             if (index) {
                 tabItem.className = 'uxd-441-category-item__head';
             }
-            else tabItem.className = 'uxd-441-category-item__head active';
+            else { tabItem.className = 'uxd-441-category-item__head active'; }
             tabItem.append(tabItemInner);
             this.nodes.allTabsContainer.insertAdjacentElement('beforeend', tabItem);
-        });
+        }.bind(this));
+    },
+
+    tabsClick: function (element) {
+        var filterHeader = element.innerText;
+        switch (filterHeader) {
+            case "Alle Seite":
+                this.nodes.allOldFilters.forEach(function (elem) {
+
+                })
+
+                break;
+            case "Produkte":
+                this.nodes.allOldFilters.forEach(function (elem) {
+                    if (elem.innerText === "Produktbereiche" || elem.innerText === "Datenblätter") {
+                        elem.click();
+                    }
+                })
+
+                break;
+            case "Unterlagen":
+                this.nodes.allOldFilters.forEach(function (elem) {
+                    if (elem.innerText === "CAD & Zeichnung" || elem.innerText === "Kataloge und Benutzerhandbücher" || elem.innerText === "Technische Informationen") {
+                        elem.click();
+                    }
+                })
+
+                break;
+            case "Software":
+                this.nodes.allOldFilters.forEach(function (elem) {
+                    if (elem.innerText === "Software/Firmware") {
+                        elem.click();
+                    }
+                })
+
+                break;
+            case "FAQ":
+                this.nodes.allOldFilters.forEach(function (elem) {
+                    if (elem.innerText === "Support und FAQs") {
+                        elem.click();
+                    }
+                })
+
+                break;
+            default:
+                break;
+        }
     },
     // setObserverToResultList: function () {
     //     var addClassesToResultCards = this.addClassesToResultCards.bind(this);
