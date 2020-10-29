@@ -6,6 +6,8 @@ var UXD441 = {
     selectors: {
         allResultsContentSelector: '.se-col-md-12',
         oldFilterSectionSelector: '.subcategory-item__body',
+        activeOldFiltersSelector: '.se_checkbox_is-active_span',
+        tabsSelector: '.uxd-441-category-item__head',
     },
 
     constants: {
@@ -24,6 +26,7 @@ var UXD441 = {
         this.nodes.tabsContainer.className = 'uxd-441-section-tabs';
         this.nodes.allTabsContainer = document.createElement('div');
         this.nodes.allTabsContainer.className = 'tabs-container';
+        this.nodes.allTabsContainer.addEventListener('click', function(event){this.tabsClick(event.target);}.bind(this));
         this.nodes.tabsContainer.append(this.nodes.allTabsContainer);
         if (!document.querySelector('.tabs-container')) { this.nodes.allResultsContent.insertAdjacentElement('beforebegin', this.nodes.tabsContainer); }
     },
@@ -42,49 +45,63 @@ var UXD441 = {
         }.bind(this));
     },
 
-    tabsClick: function (element) {
-        var filterHeader = element.innerText;
-        switch (filterHeader) {
-            case "Alle Seite":
-                this.nodes.allOldFilters.forEach(function (elem) {
+    tabsClick: function (clickedElement) {
+        debugger
+        var filterHeader = clickedElement.innerText;
+        document.querySelectorAll(this.selectors.tabsSelector).forEach(function (elem) {
+            elem.classList.remove('active');
+        });
+        document.querySelectorAll(this.selectors.activeOldFiltersSelector).forEach(function (activeElem) {
+            activeElem.click();
+        });
+        if (!clickedElement.classList.contains('active') && !clickedElement.parentNode.classList.contains('active')) {
 
-                })
+            if (clickedElement.classList.contains('uxd-441-category-item__head')) {
+                clickedElement.classList.add('active');
+            } else { clickedElement.parentNode.classList.add('active'); }
+            console.log(clickedElement.innerText);
+            switch (filterHeader) {
+                case "Alle Seite":
+                    break;
+                case "Produkte":
+    
+                    document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes.forEach(function (elem) {
+                        
+                        if (elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Produktbereiche" || elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Datenblätter") {
+                         console.log(elem.textContent.replace(/\(([^)]+)\)/g, "").trim());
+                            elem.childNodes[0].click();
+                        }
+                    }.bind(this));
 
-                break;
-            case "Produkte":
-                this.nodes.allOldFilters.forEach(function (elem) {
-                    if (elem.innerText === "Produktbereiche" || elem.innerText === "Datenblätter") {
-                        elem.click();
-                    }
-                })
+                    break;
+                case "Unterlagen":
+                    document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes.forEach(function (elem) {
+                        if (elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "CAD & Zeichnung" || elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Kataloge und Benutzerhandbücher" || elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Technische Informationen") {
+                            elem.childNodes[0].click();
+                        }
+                    }.bind(this));
 
-                break;
-            case "Unterlagen":
-                this.nodes.allOldFilters.forEach(function (elem) {
-                    if (elem.innerText === "CAD & Zeichnung" || elem.innerText === "Kataloge und Benutzerhandbücher" || elem.innerText === "Technische Informationen") {
-                        elem.click();
-                    }
-                })
+                    break;
+                case "Software":
+                    document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes.forEach(function (elem) {
 
-                break;
-            case "Software":
-                this.nodes.allOldFilters.forEach(function (elem) {
-                    if (elem.innerText === "Software/Firmware") {
-                        elem.click();
-                    }
-                })
+                        if (elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Software/Firmware") {
+                            elem.childNodes[0].click();
+                        }
+                    }.bind(this));
 
-                break;
-            case "FAQ":
-                this.nodes.allOldFilters.forEach(function (elem) {
-                    if (elem.innerText === "Support und FAQs") {
-                        elem.click();
-                    }
-                })
+                    break;
+                case "FAQ":
+                    document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes.forEach(function (elem) {
+                        if (elem.textContent.replace(/\(([^)]+)\)/g, "").trim() === "Support und FAQs") {
+                            elem.childNodes[0].click();
+                        }
+                    }.bind(this));
 
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     },
     // setObserverToResultList: function () {
