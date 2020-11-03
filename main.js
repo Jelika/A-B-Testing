@@ -1,139 +1,298 @@
-var UXD441 = {
-    config: {
-        // linkToAPCHomePage: 'https://www.apc.com/us/en',
+var UXD570 = {
+  config: {
+    isMobileSearchSet: false,
+    inputPlaceholder: 'Search on se.com',
+    brandsImgURL: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/SE_small.svg',
+    brandsLogosURLs: {
+      schneider: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/Schneider.svg?token=AMWUZCIANVSQTOLCGTEHAAC7RGEQM',
+      apc: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/APC.svg',
+      squared: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/Square_D.svg?token=AMWUZCP7NTLCZPMBGNPXVNC7RGEUQ',
+      asco: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/ASCO.svg?token=AMWUZCPLDEOPL6F6N6XPPYK7RGEVU',
     },
+    brandsURLs: [
+      '',
+      'https://www.apc.com/in/en/',
+      'https://www.se.com/us/en/brands/squared/',
+      'https://www.ascopower.com/in/en/'
+    ],
+  },
 
-    selectors: {
-        allResultsContentSelector: '.se-col-md-12',
-        oldFilterSectionSelector: '.subcategory-item__body',
-        activeOldFiltersSelector: '.se_checkbox_is-active_span',
-        tabsSelector: '.uxd-441-category-item__head',
-        resultsListSelector: '.results:last-child',
-        filterBlockSelector: '.filter-lvl1',
-        categoriesHeaderSelector: '.categories-header',
+  selectors: {
+    headerContent: '.sdl-header-se_content',
+    headerNav: '.sdl-header-se_mm-wrap',
+    headerMetabar: '.sdl-header-se_metabar-site-info',
+    metabarBtn: '.js-header-metabar-country',
+    arrowIcon: '.sdl-header-se_metabar-icon-caret-wrap',
+    brandsTab: '.uxd-570-brands-tab',
+    brandsMetabar: '.sdl-header-se_metabar-site-info-cd:nth-child(2)',
+    formInput: '.sdl-header-se_search-bar > input',
+    headerSearch: '.sdl-header-se_main',
+    closeNavBtn: '.js-header-mob-nav-btn-close',
+    desktopMetabarWrapper: '.sdl-header-se_metabar-wrap',
+    desktopMegamenuWrapper: '.sdl-header-se_mm-wrap',
+    schneiderLogoContainer: '.sdl-header-se_content > .se-col-md-3',
+    desktopHeaderSearch: '.sdl-header-se_search',
+    mobileMetabar: '.sdl-header-se_mob-nav-metabar-site-info.js-metabar-site-info',
+    metabar: '.sdl-header-se_metabar',
+    overlayPositionSelector:'.sdl-footer-se_main-part',
+  },
 
-    },
+  getNodes: function () {
+    this.nodes = {
+      headerContent: document.querySelector(this.selectors.headerContent),
+      headerNav: document.querySelector(this.selectors.headerNav),
+      headerMetabar: document.querySelector(this.selectors.headerMetabar),
+      metabarBtn: document.querySelector(this.selectors.metabarBtn),
+      arrowIcon: document.querySelector(this.selectors.arrowIcon),
+      formInput: document.querySelector(this.selectors.formInput),
+      headerSearch: document.querySelector(this.selectors.headerSearch),
+      closeNavBtn: document.querySelector(this.selectors.closeNavBtn),
+      mobileMetabar: document.querySelector(this.selectors.mobileMetabar),
+      desktopMetabarWrapper: document.querySelector(this.selectors.desktopMetabarWrapper),
+      desktopMegamenuWrapper: document.querySelector(this.selectors.desktopMegamenuWrapper),
+      schneiderLogoContainer: document.querySelector(this.selectors.schneiderLogoContainer),
+      desktopHeaderSearch: document.querySelector(this.selectors.desktopHeaderSearch),
+      overlayPosition: document.querySelector(this.selectors.overlayPositionSelector),
+    };
+  },
 
-    constants: {
-        tabsArray: ["Alle Seite", "Produkte", "Unterlagen", "Software", "FAQ"],
-    },
+  createMetabarItem: function () {
+    var metabarItem = document.createElement('li');
+    var brandsButton = document.createElement('button');
+    var overLay=document.createElement('div');
+    metabarItem.className = 'sdl-header-se_metabar-site-info-cd';
+    overLay.className='overlay-uxd-570  uxd-570-hidden';
 
-    getNodes: function () {
-        this.nodes = {
-            allResultsContent: document.querySelector(this.selectors.allResultsContentSelector),
-            allOldFilters: document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes,
-            resultsList: document.querySelector(this.selectors.resultsListSelector),
-            filterBlock: document.querySelector(this.selectors.filterBlockSelector),
-            categoriesHeader: document.querySelector(this.selectors.categoriesHeaderSelector),
-        };
-    },
+    this.nodes.overlayPosition.appendChild(overLay);
 
-    initTabContainerSection: function () {
-        this.nodes.tabsContainer = document.createElement('section');
-        this.nodes.tabsContainer.className = 'uxd-441-section-tabs';
-        this.nodes.allTabsContainer = document.createElement('div');
-        this.nodes.allTabsContainer.className = 'tabs-container';
-        this.nodes.allTabsContainer.addEventListener('click', function (event) { this.tabsClick(event.target); }.bind(this));
-        this.nodes.tabsContainer.append(this.nodes.allTabsContainer);
-        if (!document.querySelector('.tabs-container')) { this.nodes.allResultsContent.insertAdjacentElement('beforebegin', this.nodes.tabsContainer); }
-    },
-    hideFilterContainer: function () {
-        this.nodes.filterBlock.classList.add('uxd-441-hidden');
-        this.nodes.categoriesHeader.classList.add('uxd-441-hidden');
-    },
-    createTabs: function () {
-        this.constants.tabsArray.forEach(function (elem, index) {
-            var tabItem = document.createElement('div');
-            var tabItemInner = document.createElement('h6');
-            tabItemInner.className = 'uxd-441-category-item__heading';
-            tabItemInner.innerText = elem;
-            if (!sessionStorage.getItem('currentFilter')) {
-                sessionStorage.setItem('currentFilter', "Alle Seite");
-            }
-            if (elem === sessionStorage.getItem('currentFilter')) {
-                tabItem.className = 'uxd-441-category-item__head active';
-            }
-            else { tabItem.className = 'uxd-441-category-item__head'; }
+    Array.from(this.nodes.metabarBtn.attributes).forEach(function (key) {
+      if (key.name === 'class') {
+        brandsButton.classList.add(
+          'sdl-header-se_metabar-item',
+          'sdl-header-se_metabar-toggle',
+          'js-header-metabar-brands'
+        );
+      } else if (key.name === 'xtm-n') {
+        return;
+      } else {
+        brandsButton.setAttribute(key.name, key.value);
+      }
+    });
 
-            tabItem.append(tabItemInner);
-            this.nodes.allTabsContainer.insertAdjacentElement('beforeend', tabItem);
+    document.addEventListener('click', function (e) {
+      var tab = document.querySelector(this.selectors.brandsTab);
+      if (e.target.closest(this.selectors.brandsMetabar)) return;
+
+      if (!e.target.closest(this.selectors.brandsTab) && tab.classList.contains('open')) {
+        tab.classList.remove('open');
+        metabarItem.classList.remove('active');
+      }
+    }.bind(this));
+
+    metabarItem.addEventListener('click', function (e) {
+      e.currentTarget.classList.toggle('active');
+
+      var tab = document.querySelector(this.selectors.brandsTab);
+      tab.classList.toggle('open');
+    }.bind(this));
+
+    brandsButton.append(
+      document.createElement('span').innerText = 'Our brands',
+      this.nodes.arrowIcon.cloneNode(true)
+    );
+    metabarItem.append(brandsButton);
+    this.nodes.headerMetabar.append(metabarItem);
+
+    fetch(this.config.brandsImgURL)
+      .then(function (res) {
+        return res.blob();
+      })
+      .then(function (src) {
+        var brandsLogo = document.createElement('img');
+        var objURL = URL.createObjectURL(src);
+
+        brandsLogo.src = objURL;
+        brandsButton.prepend(brandsLogo);
+
+        var mobileMetabarItem = metabarItem.cloneNode(true);
+        this.nodes.mobileMetabar.append(mobileMetabarItem);
+
+        mobileMetabarItem.addEventListener('click', function () {
+          this.nodes.brandsList.style.display = 'block';
         }.bind(this));
-    },
+      }.bind(this));
 
-    tabsClick: function (clickedElement) {
-        var filterHeader = clickedElement.innerText;
-        var searchText = document.querySelector('.sdl-header-se_search-field').value;
-        var urlString = '';
-        if (!clickedElement.classList.contains('active') && !clickedElement.parentNode.classList.contains('active')) {
-            if (clickedElement.classList.contains('uxd-441-category-item__head')) {
-                clickedElement.classList.add('active');
-            } else { clickedElement.parentNode.classList.add('active'); }
 
-            switch (filterHeader) {
-                case "Alle Seite":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=';
-                    location.assign(urlString);
-                    break;
-                case "Produkte":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=Produktbereiche%2CDatenblätter';
-                    location.assign(urlString);
-                    break;
-                case "Unterlagen":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=CAD+%26+Zeichnung%2CKataloge+und+Benutzerhandbücher%2CTechnische+Informationen';
-                    location.assign(urlString);
-                    break;
-                case "Software":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=Software%2FFirmware';
-                    location.assign(urlString);
-                    break;
-                case "FAQ":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=Support+und+FAQs';
-                    location.assign(urlString);
-                    break;
-                default:
-                    break;
-            }
-        }
-        sessionStorage.setItem('currentFilter', filterHeader);
-    },
+  },
 
-    addClassesToResultCards: function () {
-        this.nodes.resultsList
-            .querySelectorAll(this.selectors.resultCardsSelector)
-            .forEach(function (card) {
-                card.classList.add('uxd-441-primary');
-            });
-    },
+  createBrandsTab: function () {
+    var _this = this;
 
-    setObserverToResultList: function () {
-        var addClassesToResultCards = this.addClassesToResultCards.bind(this);
-        var observer = new MutationObserver(addClassesToResultCards);
+    var brandsTab = document.createElement('ul');
+    brandsTab.className = 'uxd-570-brands-tab';
 
-        observer.observe(this.nodes.resultsList, {
-            childList: true,
-            subtree: true,
+    Promise.all([
+      fetch(this.config.brandsLogosURLs.schneider),
+      fetch(this.config.brandsLogosURLs.apc),
+      fetch(this.config.brandsLogosURLs.squared),
+      fetch(this.config.brandsLogosURLs.asco)
+    ]).then(function (responses) {
+      Promise.all(
+        responses.map(function (res) {
+          return res.text();
+        })
+      ).then(function (svgs) {
+        svgs.forEach(function (svg, i) {
+          var brandTile = document.createElement('li');
+          brandTile.className = 'uxd-570-brand-tile';
+          if (!i) brandTile.classList.add('selected');
+
+          var link = document.createElement('a');
+          link.href = _this.config.brandsURLs[i];
+
+          link.insertAdjacentHTML('afterbegin', svg);
+          brandTile.append(link);
+          brandsTab.append(brandTile);
+
+          // Put into mobile navigation
+          var mobileBrandTile = brandTile.cloneNode(true);
+          _this.nodes.brandsList.append(mobileBrandTile);
         });
-    },
+      });
+    });
 
-    init: function () {
-        if (document.readyState !== 'loading') {
-            this.getNodes();
-            this.hideFilterContainer();
-            this.initTabContainerSection();
-            this.createTabs();
-            this.setObserverToResultList();
-        } else {
-            var _this = this;
+    this.nodes.headerMetabar.append(brandsTab);
+  },
 
-            window.addEventListener('load', function () {
-                _this.getNodes();
-                _this.hideFilterContainer();
-                _this.initTabContainerSection();
-                _this.createTabs();
-                _this.setObserverToResultList();
-            });
-        }
-    },
+  applyChangesForDesktop: function () {
+    this.createMetabarItem();
+    this.createBrandsTab();
+
+    this.nodes.formInput.placeholder = this.config.inputPlaceholder;
+  },
+
+  replaceCloseButtonOnMobileView: function () {
+    var mobileNavigation = document.querySelector('.sdl-header-se_mob-nav-main');
+    mobileNavigation.append(this.nodes.closeNavBtn);
+  },
+
+  changeSearchView: function () {
+    document.querySelector(this.selectors.formInput).addEventListener('click', function (elem) {
+      document.querySelector('.se-col-md-3').classList.add('uxd-570-hidden');
+      document.querySelector('.sdl-header-se_mm-l1-list').classList.add('uxd-570-hidden');
+      document.querySelector('.sdl-header-se_main').classList.add('sdl-header-se_main-width');
+      document.querySelector('.sdl-header-se_main').classList.remove('se-col-md-8');
+      document.querySelector('.sdl-header-se_main').classList.remove('se-col-xl-9');
+      document.querySelector('.sdl-header-se_search-bar').classList.add('sdl-header-se_search-bar-border');
+      document.querySelector('.sdl-header-se_search-field').classList.add('sdl-header-se_search-field-uxd-570');
+      document.querySelector('.sdl-header-se_wrap').classList.add('sdl-header-se_wrap-uxd-570');
+      document.querySelector('.sdl-header-se_wrap').classList.add('sdl-header-se_wrap-uxd-570');
+      document.querySelector('.overlay-uxd-570').classList.remove('uxd-570-hidden');
+
+    }.bind(this));
+  },
+  createMobileBrandsTab: function () {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'uxd-570-brands-tab-wrapper';
+
+    var title = document.createElement('p');
+    title.className = 'uxd-570-brands-title';
+    title.textContent = 'Our brands';
+
+    this.nodes.brandsList = document.createElement('ul');
+    this.nodes.brandsList.className = 'uxd-570-brands-list';
+
+    var controlItem = document.createElement('li');
+    controlItem.className = 'uxd-570-control-item';
+
+    var closeBtn = this.nodes.closeNavBtn.cloneNode(true);
+    var arrowIcon = this.nodes.arrowIcon.cloneNode(true);
+
+    var title = document.createElement('span');
+    title.className = 'uxd-570-control-title';
+    title.textContent = 'Our brands';
+
+    controlItem.append(arrowIcon, title, closeBtn);
+    this.nodes.brandsList.append(controlItem);
+
+    var navigation = document.querySelector('.sdl-header-se_mob-nav-main');
+    navigation.append(this.nodes.brandsList);
+
+    closeBtn.addEventListener('click', function () {
+      this.nodes.closeNavBtn.click();
+      this.nodes.brandsList.style.display = 'none';
+    }.bind(this));
+
+    arrowIcon.addEventListener('click', function () {
+      this.nodes.brandsList.style.display = 'none';
+    }.bind(this));
+
+  },
+
+  moveElementsInMobileView: function () {
+    var isMobileWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 720;
+
+    if (isMobileWidth && !this.config.isMobileSearchSet) {
+      var container = document.querySelector('.sdl-header-se_wrap > .se-container');
+      container.insertAdjacentElement('afterend', this.nodes.headerSearch);
+
+      this.config.isMobileSearchSet = true;
+      this.hideHeaderBanner();
+    } else if (!isMobileWidth && this.config.isMobileSearchSet) {
+      var navigation = document.querySelector('.sdl-header-se_btn-nav-wrap');
+      navigation.insertAdjacentElement('afterend', this.nodes.headerSearch);
+
+      this.config.isMobileSearchSet = false;
+      this.hideHeaderBanner();
+    }
+  },
+  hideHeaderBanner: function () {
+    if (!window.scrollY && !this.config.isMobileSearchSet) {
+      document.querySelector(this.selectors.metabar).style.display = "block";
+    } else document.querySelector(this.selectors.metabar).style.display = "none";
+  },
+
+  addClassesForMetrics: function () {
+    this.nodes.desktopMetabarWrapper.classList.add('uxd-570-zone-1');
+    this.nodes.desktopMegamenuWrapper.classList.add('uxd-570-zone-2');
+    this.nodes.schneiderLogoContainer.classList.add('uxd-570-zone-2');
+    this.nodes.desktopHeaderSearch.classList.add('uxd-570-zone-3');
+
+    // add for mobile metbar
+    var mobileMetabar = document.querySelector('.sdl-header-se_mob-nav-metabar');
+    var mobileNavigation = document.querySelector('.sdl-header-se_mob-nav-l1-list');
+    mobileMetabar.classList.add('uxd-570-zone-1');
+    mobileNavigation.classList.add('uxd-570-zone-2');
+  },
+
+  init: function () {
+    if (document.readyState !== 'loading') {
+      this.getNodes();
+      this.applyChangesForDesktop();
+      this.moveElementsInMobileView();
+      this.replaceCloseButtonOnMobileView();
+      this.createMobileBrandsTab();
+      this.addClassesForMetrics();
+      this.changeSearchView();
+
+      window.addEventListener('resize', this.moveElementsInMobileView.bind(this));
+      window.addEventListener('scroll', this.hideHeaderBanner.bind(this));
+    } else {
+      var _this = this;
+
+      window.addEventListener('load', function () {
+        _this.getNodes();
+        _this.applyChangesForDesktop();
+        _this.moveElementsInMobileView();
+        _this.replaceCloseButtonOnMobileView();
+        _this.createMobileBrandsTab();
+        _this.addClassesForMetrics();
+        _this.changeSearchView();
+        window.addEventListener('resize', _this.moveElementsInMobileView.bind(_this));
+        window.addEventListener('scroll', _this.hideHeaderBanner.bind(this));
+      });
+    }
+  },
 };
 
-UXD441.init();
+UXD570.init();
