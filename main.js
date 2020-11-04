@@ -34,7 +34,8 @@ var UXD570 = {
     desktopHeaderSearch: '.sdl-header-se_search',
     mobileMetabar: '.sdl-header-se_mob-nav-metabar-site-info.js-metabar-site-info',
     metabar: '.sdl-header-se_metabar',
-    overlayPositionSelector:'.sdl-footer-se_main-part',
+    overlayPositionSelector: '.sdl-footer-se_main-part',
+    navigationBarBtn: '.sdl-header-se_btn-nav-wrap',
   },
 
   getNodes: function () {
@@ -53,15 +54,24 @@ var UXD570 = {
       schneiderLogoContainer: document.querySelector(this.selectors.schneiderLogoContainer),
       desktopHeaderSearch: document.querySelector(this.selectors.desktopHeaderSearch),
       overlayPosition: document.querySelector(this.selectors.overlayPositionSelector),
+      navigationBarBtn: document.querySelector(this.selectors.navigationBarBtn),
     };
   },
 
   createMetabarItem: function () {
     var metabarItem = document.createElement('li');
     var brandsButton = document.createElement('button');
-    var overLay=document.createElement('div');
+    var overLay = document.createElement('div');
+    var searchIconSvg = document.querySelector('.sdl-header-se_search-submit').lastChild.cloneNode(true);
+    searchIconSvg.style.width = "20";
+    searchIconSvg.style.height = "20";
+    searchIconSvg.lastChild.parentNode.setAttribute('viewBox', "0 0 35 35");
+    var searchIconSvgWrap = document.createElement('div');
+    searchIconSvgWrap.className = "search-icon_Wrap-UXD-570";
+    searchIconSvgWrap.appendChild(searchIconSvg);
+    this.nodes.navigationBarBtn.insertAdjacentElement("beforeBegin", searchIconSvgWrap);
     metabarItem.className = 'sdl-header-se_metabar-site-info-cd';
-    overLay.className='overlay-uxd-570  uxd-570-hidden';
+    overLay.className = 'overlay-uxd-570  uxd-570-hidden';
 
     this.nodes.overlayPosition.appendChild(overLay);
 
@@ -176,21 +186,28 @@ var UXD570 = {
     mobileNavigation.append(this.nodes.closeNavBtn);
   },
 
-  changeSearchView: function () {
-    document.querySelector(this.selectors.formInput).addEventListener('click', function (elem) {
-      document.querySelector('.se-col-md-3').classList.add('uxd-570-hidden');
-      document.querySelector('.sdl-header-se_mm-l1-list').classList.add('uxd-570-hidden');
-      document.querySelector('.sdl-header-se_main').classList.add('sdl-header-se_main-width');
-      document.querySelector('.sdl-header-se_main').classList.remove('se-col-md-8');
-      document.querySelector('.sdl-header-se_main').classList.remove('se-col-xl-9');
-      document.querySelector('.sdl-header-se_search-bar').classList.add('sdl-header-se_search-bar-border');
-      document.querySelector('.sdl-header-se_search-field').classList.add('sdl-header-se_search-field-uxd-570');
-      document.querySelector('.sdl-header-se_wrap').classList.add('sdl-header-se_wrap-uxd-570');
-      document.querySelector('.sdl-header-se_wrap').classList.add('sdl-header-se_wrap-uxd-570');
-      document.querySelector('.overlay-uxd-570').classList.remove('uxd-570-hidden');
-
-    }.bind(this));
+  addListenerForChangeSearchView: function () {
+    document.querySelector(this.selectors.formInput).addEventListener('click', function () { if (!document.querySelector('.se-col-md-3').classList.contains('uxd-570-hidden')) { this.changeSearchView(); } }.bind(this));
+    document.querySelector('.overlay-uxd-570').addEventListener('click', this.changeSearchView.bind(this));
   },
+
+  changeSearchView: function () {
+    document.querySelector('.se-col-md-3').classList.toggle('uxd-570-hidden');
+    document.querySelector('.sdl-header-se_mm-l1-list').classList.toggle('uxd-570-hidden');
+    document.querySelector('.sdl-header-se_main').classList.toggle('sdl-header-se_main-width');
+    document.querySelector('.sdl-header-se_main').classList.toggle('se-col-md-8');
+    document.querySelector('.sdl-header-se_main').classList.toggle('se-col-xl-9');
+    document.querySelector('.sdl-header-se_search-bar').classList.toggle('sdl-header-se_search-bar-border');
+    document.querySelector('.sdl-header-se_search-field').classList.toggle('sdl-header-se_search-field-uxd-570');
+    document.querySelector('.sdl-header-se_wrap').classList.toggle('sdl-header-se_wrap-uxd-570');
+    document.querySelector('.sdl-header-se_wrap').classList.toggle('sdl-header-se_wrap-uxd-570');
+    document.querySelector('.overlay-uxd-570').classList.toggle('uxd-570-hidden');
+    if (this.config.isMobileSearchSet) {
+      document.querySelector('.sdl-header-se_main').classList.toggle('sdl-header-se_main-width_mobile');
+    }
+  },
+
+
   createMobileBrandsTab: function () {
     var wrapper = document.createElement('div');
     wrapper.className = 'uxd-570-brands-tab-wrapper';
@@ -231,18 +248,22 @@ var UXD570 = {
 
   moveElementsInMobileView: function () {
     var isMobileWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 720;
-
+    var changedSearchView = document.querySelector('.sdl-header-se_main');
     if (isMobileWidth && !this.config.isMobileSearchSet) {
       var container = document.querySelector('.sdl-header-se_wrap > .se-container');
       container.insertAdjacentElement('afterend', this.nodes.headerSearch);
 
       this.config.isMobileSearchSet = true;
+
+      if (!changedSearchView.classList.contains('sdl-header-se_main-width_mobile') && changedSearchView.classList.contains('sdl-header-se_main-width')) { changedSearchView.classList.add('sdl-header-se_main-width_mobile'); }
       this.hideHeaderBanner();
+
     } else if (!isMobileWidth && this.config.isMobileSearchSet) {
       var navigation = document.querySelector('.sdl-header-se_btn-nav-wrap');
       navigation.insertAdjacentElement('afterend', this.nodes.headerSearch);
 
       this.config.isMobileSearchSet = false;
+      if (changedSearchView.classList.contains('sdl-header-se_main-width_mobile')) { changedSearchView.classList.remove('sdl-header-se_main-width_mobile'); }
       this.hideHeaderBanner();
     }
   },
@@ -250,6 +271,16 @@ var UXD570 = {
     if (!window.scrollY && !this.config.isMobileSearchSet) {
       document.querySelector(this.selectors.metabar).style.display = "block";
     } else document.querySelector(this.selectors.metabar).style.display = "none";
+    if (document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden')) {
+      if (window.scrollY && this.config.isMobileSearchSet) {
+        document.querySelector('.sdl-header-se_search-bar').style.display = "none";
+        document.querySelector('.search-icon_Wrap-UXD-570').style.display = "block";
+      } else if (!window.scrollY && this.config.isMobileSearchSet) {
+        document.querySelector('.sdl-header-se_search-bar').style.display = "flex";
+        document.querySelector('.search-icon_Wrap-UXD-570').style.display = "none";
+      }
+    }
+
   },
 
   addClassesForMetrics: function () {
@@ -273,7 +304,7 @@ var UXD570 = {
       this.replaceCloseButtonOnMobileView();
       this.createMobileBrandsTab();
       this.addClassesForMetrics();
-      this.changeSearchView();
+      this.addListenerForChangeSearchView();
 
       window.addEventListener('resize', this.moveElementsInMobileView.bind(this));
       window.addEventListener('scroll', this.hideHeaderBanner.bind(this));
@@ -287,7 +318,7 @@ var UXD570 = {
         _this.replaceCloseButtonOnMobileView();
         _this.createMobileBrandsTab();
         _this.addClassesForMetrics();
-        _this.changeSearchView();
+        _this.addListenerForChangeSearchView();
         window.addEventListener('resize', _this.moveElementsInMobileView.bind(_this));
         window.addEventListener('scroll', _this.hideHeaderBanner.bind(this));
       });
