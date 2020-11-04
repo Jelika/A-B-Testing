@@ -9,12 +9,10 @@ var UXD441 = {
         activeOldFiltersSelector: '.se_checkbox_is-active_span',
         tabsSelector: '.uxd-441-category-item__head',
         resultsListSelector: '.results:last-child',
-        filterItemsSelector: 'aside .filter-lvl2.subcategory-item',
     },
 
     constants: {
         tabsArray: ["Alle Seite", "Produkte", "Unterlagen", "Software", "FAQ"],
-        filtersArray:[],
     },
 
     getNodes: function () {
@@ -22,16 +20,10 @@ var UXD441 = {
             allResultsContent: document.querySelector(this.selectors.allResultsContentSelector),
             allOldFilters: document.querySelector(this.selectors.oldFilterSectionSelector).firstChild.childNodes,
             resultsList: document.querySelector(this.selectors.resultsListSelector),
-            filterItems:document.querySelectorAll(this.selectors.filterItemsSelector),
         };
     },
 
     initTabContainerSection: function () {
-        var filterNames=[];
-        this.nodes.filterItems.forEach(function (elem) {
-            filterNames.push(elem.textContent.replace(/\(([^)]+)\)/g, "").trim());
-        });
-        this.constants.filtersArray=filterNames;
         this.nodes.tabsContainer = document.createElement('section');
         this.nodes.tabsContainer.className = 'uxd-441-section-tabs';
         this.nodes.allTabsContainer = document.createElement('div');
@@ -42,7 +34,6 @@ var UXD441 = {
     },
 
     createTabs: function () {
-       
         this.constants.tabsArray.forEach(function (elem, index) {
             var tabItem = document.createElement('div');
             var tabItemInner = document.createElement('h6');
@@ -59,14 +50,12 @@ var UXD441 = {
             tabItem.append(tabItemInner);
             this.nodes.allTabsContainer.insertAdjacentElement('beforeend', tabItem);
         }.bind(this));
-
     },
 
     tabsClick: function (clickedElement) {
         var filterHeader = clickedElement.innerText;
         var searchText = document.querySelector('.sdl-header-se_search-field').value;
         var urlString = '';
-        console.log('dfsf',this.constants.constants.filtersArray.includes("Produktbereiche"));
         if (!clickedElement.classList.contains('active') && !clickedElement.parentNode.classList.contains('active')) {
             if (clickedElement.classList.contains('uxd-441-category-item__head')) {
                 clickedElement.classList.add('active');
@@ -78,11 +67,11 @@ var UXD441 = {
                     location.assign(urlString);
                     break;
                 case "Produkte":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText +'?multifilter='+ (this.constants.constants.filtersArray.includes("Produktbereiche")?'Produktbereiche%2C':'') +(this.constants.constants.filtersArray.includes("Datenblätter")?'Datenblätter%2C':'');
+                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=Produktbereiche%2CDatenblätter';
                     location.assign(urlString);
                     break;
                 case "Unterlagen":
-                    urlString = 'https://www.se.com/de/de/search/' + searchText +'?multifilter='+ (this.constants.constants.filtersArray.includes("CAD & Zeichnung")?'CAD+%26+Zeichnung%2C':'') +(this.constants.constants.filtersArray.includes("Kataloge und Benutzerhandbücher")?'Kataloge+und+Benutzerhandbücher%2C':'')+(this.constants.constants.filtersArray.includes("Technische Informationen")?'Technische+Informationen%2C':'');
+                    urlString = 'https://www.se.com/de/de/search/' + searchText + '?multifilter=CAD+%26+Zeichnung%2CKataloge+und+Benutzerhandbücher%2CTechnische+Informationen';
                     location.assign(urlString);
                     break;
                 case "Software":
