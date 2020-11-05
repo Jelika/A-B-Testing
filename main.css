@@ -27,7 +27,8 @@
   display: none;
   position: absolute;
   top: 10px;
-  right: 50px;
+  right: 65px;
+  cursor: pointer;
 }
 .uxd-570-hidden {
   display: none!important;

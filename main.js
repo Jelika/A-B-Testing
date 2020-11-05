@@ -36,7 +36,6 @@ var UXD570 = {
     metabar: '.sdl-header-se_metabar',
     overlayPositionSelector: '.sdl-footer-se_main-part',
     navigationBarBtn: '.sdl-header-se_btn-nav-wrap',
-    searchInput: '.sdl-header-se_search-field',
   },
 
   getNodes: function () {
@@ -56,7 +55,6 @@ var UXD570 = {
       desktopHeaderSearch: document.querySelector(this.selectors.desktopHeaderSearch),
       overlayPosition: document.querySelector(this.selectors.overlayPositionSelector),
       navigationBarBtn: document.querySelector(this.selectors.navigationBarBtn),
-      searchInput: document.querySelector(this.selectors.searchInput),
     };
   },
 
@@ -74,7 +72,8 @@ var UXD570 = {
     searchIconSvgWrap.className = "search-icon_Wrap-UXD-570";
     searchIconSvgWrap.appendChild(searchIconSvg);
     searchIconSvgWrap.addEventListener('click', function () {
-      this.nodes.searchInput.click();
+      document.querySelector('.sdl-header-se_search-bar').style="flex";
+      this.nodes.formInput.click();
     }.bind(this));
 
     this.nodes.navigationBarBtn.insertAdjacentElement("beforeBegin", searchIconSvgWrap);
@@ -137,7 +136,7 @@ var UXD570 = {
         this.nodes.mobileMetabar.append(mobileMetabarItem);
 
         mobileMetabarItem.addEventListener('click', function () {
-          this.nodes.brandsList.style.display = 'block';
+          this.nodes.brandsList.style.display = 'block'; 
         }.bind(this));
       }.bind(this));
 
@@ -213,6 +212,7 @@ var UXD570 = {
     document.querySelector('.overlay-uxd-570').classList.toggle('uxd-570-hidden');
     if (this.config.isMobileSearchSet) {
       document.querySelector('.sdl-header-se_main').classList.toggle('sdl-header-se_main-width_mobile');
+      this.hideHeaderBanner();
     }
   },
 
@@ -277,9 +277,15 @@ var UXD570 = {
     }
   },
   hideHeaderBanner: function () {
+   var metabarBanner=  document.querySelector(this.selectors.metabar);
+   if(metabarBanner){
+     if(!this.config.isMobileSearchSet){
+      document.querySelector('.sdl-header-se_search-bar').style.display = "flex";
+      document.querySelector('.search-icon_Wrap-UXD-570').style.display = "none";
+     }
     if (!window.scrollY && !this.config.isMobileSearchSet) {
-      document.querySelector(this.selectors.metabar).style.display = "block";
-    } else document.querySelector(this.selectors.metabar).style.display = "none";
+      metabarBanner.style.display = "block";
+    } else {metabarBanner.style.display = "none";}}
     if (document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden')) {
       if (window.scrollY && this.config.isMobileSearchSet) {
         document.querySelector('.sdl-header-se_search-bar').style.display = "none";
@@ -329,7 +335,7 @@ var UXD570 = {
         _this.addClassesForMetrics();
         _this.addListenerForChangeSearchView();
         window.addEventListener('resize', _this.moveElementsInMobileView.bind(_this));
-        window.addEventListener('scroll', _this.hideHeaderBanner.bind(this));
+        window.addEventListener('scroll', _this.hideHeaderBanner.bind(_this));
       });
     }
   },
