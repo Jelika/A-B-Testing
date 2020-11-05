@@ -36,6 +36,7 @@ var UXD570 = {
     metabar: '.sdl-header-se_metabar',
     overlayPositionSelector: '.sdl-footer-se_main-part',
     navigationBarBtn: '.sdl-header-se_btn-nav-wrap',
+    searchInput: '.sdl-header-se_search-field',
   },
 
   getNodes: function () {
@@ -55,6 +56,7 @@ var UXD570 = {
       desktopHeaderSearch: document.querySelector(this.selectors.desktopHeaderSearch),
       overlayPosition: document.querySelector(this.selectors.overlayPositionSelector),
       navigationBarBtn: document.querySelector(this.selectors.navigationBarBtn),
+      searchInput: document.querySelector(this.selectors.searchInput),
     };
   },
 
@@ -62,17 +64,23 @@ var UXD570 = {
     var metabarItem = document.createElement('li');
     var brandsButton = document.createElement('button');
     var overLay = document.createElement('div');
+    var searchIconSvgWrap = document.createElement('div');
+
     var searchIconSvg = document.querySelector('.sdl-header-se_search-submit').lastChild.cloneNode(true);
     searchIconSvg.style.width = "20";
     searchIconSvg.style.height = "20";
     searchIconSvg.lastChild.parentNode.setAttribute('viewBox', "0 0 35 35");
-    var searchIconSvgWrap = document.createElement('div');
+
     searchIconSvgWrap.className = "search-icon_Wrap-UXD-570";
     searchIconSvgWrap.appendChild(searchIconSvg);
+    searchIconSvgWrap.addEventListener('click', function () {
+      this.nodes.searchInput.click();
+    }.bind(this));
+
     this.nodes.navigationBarBtn.insertAdjacentElement("beforeBegin", searchIconSvgWrap);
     metabarItem.className = 'sdl-header-se_metabar-site-info-cd';
-    overLay.className = 'overlay-uxd-570  uxd-570-hidden';
 
+    overLay.className = 'overlay-uxd-570  uxd-570-hidden';
     this.nodes.overlayPosition.appendChild(overLay);
 
     Array.from(this.nodes.metabarBtn.attributes).forEach(function (key) {
@@ -105,6 +113,7 @@ var UXD570 = {
       var tab = document.querySelector(this.selectors.brandsTab);
       tab.classList.toggle('open');
     }.bind(this));
+
 
     brandsButton.append(
       document.createElement('span').innerText = 'Our brands',
