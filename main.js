@@ -1,16 +1,19 @@
 var UXD547 = {
   config: {
+    bannerPngURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Banner-1180x200.png',
     contactsLogosURLs: {
-      apple: 'https://raw.githubusercontent.com/lobanyov/A-B-testing/master/UXD-570-multivariate-header/C/assets/Schneider.svg?token=AMWUZCIANVSQTOLCGTEHAAC7RGEQM',
-      schnider: 'https://schneider.atlassian.net/7508c9c0-dc78-4cb4-a56d-0b876cd4a329', 
-      facebook: 'https://schneider.atlassian.net/c45397c1-fbde-4df4-a110-f0ce2afa2614',
-      linkedIn: 'https://schneider.atlassian.net/7e3e4e9a-ce16-4211-85c6-7b1f2e415d0c',
+      apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
+      linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Linkedin-35x35.svg',
+      schnider: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
+      facebook: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Facebook-35x35.svg',
+
     },
     mediaURLs: [
+      '<a class="icon-linkedin" onclick="invokeProcessLI()" target="_blank" title="LinkedIn" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
       '<a class="icon-apple" id="apple" onclick="invokeProcessAP();" title="Apple" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
       '<a class="icon-Schnider" onclick="invokeProcessPng()" target="_blank" title="Schneider-Electric Employee Login" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
       '<a class="icon-facebook" id="fb" onclick="invokeProcessFB();" title="Facebook" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
-      '<a class="icon-linkedin" onclick="invokeProcessLI()" target="_blank" title="LinkedIn" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
+
     ],
   },
 
@@ -20,7 +23,8 @@ var UXD547 = {
     registerLinkSelector: '.text-center > a',
     mySchneiderBlockSelector: '.td-cell',
     privacyNoticeSelector: '.privacy-notice',
-    nextBtnSelector:'.form-group:nth-child(2)',
+    nextBtnSelector: '.form-group:nth-child(2)',
+    benefitsSelector: '.application-group>.td-cell',
   },
 
   getNodes: function () {
@@ -31,6 +35,7 @@ var UXD547 = {
       mySchneiderBlock: document.querySelector(this.selectors.mySchneiderBlockSelector),
       privacyNotice: document.querySelector(this.selectors.privacyNoticeSelector),
       nextBtn: document.querySelector(this.selectors.nextBtnSelector),
+      benefits: document.querySelector(this.selectors.benefitsSelector),
     };
   },
 
@@ -61,23 +66,40 @@ var UXD547 = {
   registrationBtnHandler: function () {
     this.nodes.registerLink.click();
   },
+
+  createBenefits: function () {
+    // var benefitsHeader = document.createElement('h2');
+    // var benefitTitle = document.createElement('p');
+    // var benefitDescription= document.createElement('p');
+    // var benefitIcon=document.createElement('div');
+
+    this.nodes.benefits.innerHTML='<div class="uxd-547-benefits_container">'+
+    '<h2 class="benefits_header">Enjoy all benefits of a Schneider Electric account!</h2>'+' <div class="benefits_list">'+
+     '<div class="benefits_item" ><h5 class="benefits_title">Instant access and support</h5>'+
+        '<p>Get access to our online chat, training, and business services customized for you, anywhere, anytime.</p></div>'+
+     '<div class="benefits_item"><h5 class="benefits_title">Key data in one place</h5>'+
+    '<p>Find the right products with catalogs, selectors, and configurators, in just a few clicks.</p></div>'+
+      '<div class="benefits_item"><h5 class="benefits_title">Personalized experience</h5>'+
+      '<p> Organize your homepage content the way that works for you.</p></div></div> </div>';
+  },
+
   createContactMedia: function () {
     var _this = this;
 
     var contactsLInks = document.createElement('ul');
-    var continueWithContainer=document.createElement('div');
-    var continueWithHeader=document.createElement('p');
+    var continueWithContainer = document.createElement('div');
+    var continueWithHeader = document.createElement('p');
     contactsLInks.className = 'uxd-547-contacts';
-    continueWithHeader.className='UXD-547-paragraph';
-    continueWithHeader.innerText='Or continue with';
+    continueWithHeader.className = 'UXD-547-paragraph';
+    continueWithHeader.innerText = 'Or continue with';
     continueWithContainer.append(continueWithHeader);
     Promise.all([
-      fetch(this.config.contactsLogosURLs.apple),
-      fetch(this.config.contactsLogosURLs.schnider),
-      fetch(this.config.contactsLogosURLs.facebook),
-      fetch(this.config.contactsLogosURLs.linkedIn),
+      fetch(_this.config.contactsLogosURLs.apple),
+      fetch(_this.config.contactsLogosURLs.linkedIn),
+      fetch(_this.config.contactsLogosURLs.schnider),
+      fetch(_this.config.contactsLogosURLs.facebook),
     ]).then(function (responses) {
-      Promise.all(``
+      Promise.all(
         responses.map(function (res) {
           return res.text();
         })
@@ -85,14 +107,17 @@ var UXD547 = {
         svgs.forEach(function (svg, i) {
           var contactLink = document.createElement('li');
           contactLink.className = 'uxd-547-media';
-          contactLink.innerHTML(_this.config.mediaURLs[i]);
+          contactLink.innerHTML = _this.config.mediaURLs[i];
           contactLink.childNodes[0].insertAdjacentHTML('afterbegin', svg);
           contactsLInks.append(contactLink);
         });
+      }).then(function () {
+        continueWithContainer.append(contactsLInks);
+        _this.nodes.nextBtn.insertAdjacentElement("afterEnd", continueWithContainer);
       });
     });
-    continueWithContainer.append(contactsLInks);
-    this.nodes.nextBtn.insertAdjacentElement("afterEnd",continueWithContainer);
+    this.createBenefits();
+
   },
 
   init: function () {
