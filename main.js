@@ -6,7 +6,11 @@ var UXD547 = {
       linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Linkedin-35x35.svg',
       schnider: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
       facebook: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Facebook-35x35.svg',
-
+    },
+    benefitsIconsURLs: {
+      action: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/action_paste-50x50.svg',
+      cloud: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/cloud_download-50x50.svg',
+      light: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/light_on-50x50.svg',
     },
     mediaURLs: [
       '<a class="icon-linkedin" onclick="invokeProcessLI()" target="_blank" title="LinkedIn" xtm-t="A" xtm-n="<js:sei_stat.app>::%n::social::</jsfunc:sei_stat.loginSocial>"></a>',
@@ -25,6 +29,7 @@ var UXD547 = {
     privacyNoticeSelector: '.privacy-notice',
     nextBtnSelector: '.form-group:nth-child(2)',
     benefitsSelector: '.application-group>.td-cell',
+    mainBannerSelector: '.signup-cove-position',
   },
 
   getNodes: function () {
@@ -36,6 +41,7 @@ var UXD547 = {
       privacyNotice: document.querySelector(this.selectors.privacyNoticeSelector),
       nextBtn: document.querySelector(this.selectors.nextBtnSelector),
       benefits: document.querySelector(this.selectors.benefitsSelector),
+      mainBanner: document.querySelector(this.selectors.mainBannerSelector),
     };
   },
 
@@ -68,19 +74,30 @@ var UXD547 = {
   },
 
   createBenefits: function () {
-    // var benefitsHeader = document.createElement('h2');
-    // var benefitTitle = document.createElement('p');
-    // var benefitDescription= document.createElement('p');
-    // var benefitIcon=document.createElement('div');
+    this.nodes.benefits.innerHTML = '<div class="uxd-547-benefits_container">' +
+      '<h2 class="benefits_header">Enjoy all benefits of a Schneider Electric account!</h2>' + ' <div class="benefits_list">' +
+      '<div class="benefits_item" ><div class="benefit-svg"></div><div class="description"><h5 class="benefits_title">Instant access and support</h5>' +
+      '<p>Get access to our online chat, training, and business services customized for you, anywhere, anytime.</p></div></div>' +
+      '<div class="benefits_item"><div class="benefit-svg"></div><div class="description"><h5 class="benefits_title">Key data in one place</h5>' +
+      '<p>Find the right products with catalogs, selectors, and configurators, in just a few clicks.</p></div></div>' +
+      '<div class="benefits_item"><div class="benefit-svg"></div><div class="description"><h5 class="benefits_title">Personalized experience</h5>' +
+      '<p> Organize your homepage content the way that works for you.</p></div></div></div> </div>';
+  },
+  createImgBanner: function () {
+    var _this = this;
+    var imgContainer = document.createElement('div');
+    imgContainer.className = 'uxd-547-banner-container';
 
-    this.nodes.benefits.innerHTML='<div class="uxd-547-benefits_container">'+
-    '<h2 class="benefits_header">Enjoy all benefits of a Schneider Electric account!</h2>'+' <div class="benefits_list">'+
-     '<div class="benefits_item" ><h5 class="benefits_title">Instant access and support</h5>'+
-        '<p>Get access to our online chat, training, and business services customized for you, anywhere, anytime.</p></div>'+
-     '<div class="benefits_item"><h5 class="benefits_title">Key data in one place</h5>'+
-    '<p>Find the right products with catalogs, selectors, and configurators, in just a few clicks.</p></div>'+
-      '<div class="benefits_item"><h5 class="benefits_title">Personalized experience</h5>'+
-      '<p> Organize your homepage content the way that works for you.</p></div></div> </div>';
+    fetch(_this.config.bannerPngURL).then(function (res) {
+      return res.blob();
+    }).then(function (png) {
+      var bannerImg = document.createElement('img');
+      bannerImg.className="banner-img";
+      var objURL = URL.createObjectURL(png);
+      bannerImg.src = objURL;
+      imgContainer.append(bannerImg);
+      _this.nodes.mainBanner.prepend(imgContainer);
+    });
   },
 
   createContactMedia: function () {
@@ -117,7 +134,22 @@ var UXD547 = {
       });
     });
     this.createBenefits();
-
+    this.createImgBanner();
+    Promise.all([
+      fetch(_this.config.benefitsIconsURLs.light),
+      fetch(_this.config.benefitsIconsURLs.cloud),
+      fetch(_this.config.benefitsIconsURLs.action),
+    ]).then(function (responses) {
+      Promise.all(
+        responses.map(function (res) {
+          return res.text();
+        })
+      ).then(function (svgs) {
+        svgs.forEach(function (svg, i) {
+          document.querySelectorAll('.benefit-svg')[i].insertAdjacentHTML('afterbegin', svg);
+        });
+      });
+    });
   },
 
   init: function () {

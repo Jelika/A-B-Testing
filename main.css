@@ -17,6 +17,7 @@ div.signin-up.index.login {
   padding: 25px 40px;
   border: 1px solid #e7e7e7;
   box-shadow: 0px 1px 4px 0px rgba(106, 111, 109, 0.2);
+  background: #fff;
 }
 
 #j_id0:idpPost1>div:first-child {
@@ -88,7 +89,7 @@ div.application-group {
   text-decoration: none;
 }
 .uxd-547-benefits_container{
-
+  padding-bottom: 30px;
 }
 .benefits_header{
   font-weight: bold;
@@ -96,10 +97,12 @@ div.application-group {
   font-size: 24px;
 }
 .benefits_list{
-
+  padding-left: 15px;
+  padding-top: 30px;
 }
 .benefits_item{
-
+display: flex;
+align-items: center;
 }
 .benefits_title{
   font-weight: bold;
@@ -108,4 +111,34 @@ div.application-group {
 }
 .benefits_title>p{
   
+}
+.benefit-svg{
+  width: 50px;
+  height: 50px;
+}
+.description{
+  padding-left: 30px;
+}
+.lightGreenBar,.darkGreenBar{
+display: none;
+}
+div.userlogin-pg.container.mainBgContianer,.signUpPanel{
+  background: #fafafa;
+  background-image: url()!important;
+}
+div.column2.col-sm-5.col-md-5.col-lg-5{
+  background: #fafafa;
+}
+div.signUpPanel{
+padding: 20px 0px 90px 0px;
+}
+.signup-cove-position{
+padding:0px 70px;
+}
+.uxd-547-banner-container{
+padding: 0px 10px;
+padding-bottom: 10px;
+}
+.banner-img{
+  width: 100%;
 }
