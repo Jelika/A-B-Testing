@@ -30,6 +30,7 @@ var UXD547 = {
     nextBtnSelector: '.form-group:nth-child(2)',
     benefitsSelector: '.application-group>.td-cell',
     mainBannerSelector: '.signup-cove-position',
+    contentContainerSelector: '.userlogin-pg.container.mainBgContianer',
   },
 
   getNodes: function () {
@@ -42,6 +43,7 @@ var UXD547 = {
       nextBtn: document.querySelector(this.selectors.nextBtnSelector),
       benefits: document.querySelector(this.selectors.benefitsSelector),
       mainBanner: document.querySelector(this.selectors.mainBannerSelector),
+      contentContainer: document.querySelector(this.selectors.contentContainerSelector),
     };
   },
 
@@ -98,6 +100,12 @@ var UXD547 = {
       imgContainer.append(bannerImg);
       _this.nodes.mainBanner.prepend(imgContainer);
     });
+  },
+  createHeader: function(){
+    var headerBanner=document.createElement('div');
+    headerBanner.className="uxd-547-header-banner";
+    var _this=this;
+    _this.nodes.contentContainer.prepend(headerBanner);
   },
 
   createContactMedia: function () {
