@@ -1,6 +1,7 @@
 var UXD547 = {
   config: {
     bannerPngURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Banner-1180x200.png',
+    logoSeURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Logo_White.svg',
     contactsLogosURLs: {
       apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
       linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Linkedin-35x35.svg',
@@ -88,7 +89,12 @@ var UXD547 = {
   createImgBanner: function () {
     var _this = this;
     var imgContainer = document.createElement('div');
+    var mySchneiderTitleContainer = document.createElement('div');
+    mySchneiderTitleContainer.className="uxd-547-mySchneider";
+    mySchneiderTitleContainer.innerHTML='<h1>mySchneider</h1><p>my account, my personalized experience</p>';
+    imgContainer.append(mySchneiderTitleContainer);
     imgContainer.className = 'uxd-547-banner-container';
+
 
     fetch(_this.config.bannerPngURL).then(function (res) {
       return res.blob();
@@ -99,13 +105,24 @@ var UXD547 = {
       bannerImg.src = objURL;
       imgContainer.append(bannerImg);
       _this.nodes.mainBanner.prepend(imgContainer);
+      _this.createHeader();
     });
+   
   },
   createHeader: function(){
-    var headerBanner=document.createElement('div');
-    headerBanner.className="uxd-547-header-banner";
     var _this=this;
-    _this.nodes.contentContainer.prepend(headerBanner);
+    var headerBanner=document.createElement('div');
+    var logoContainer=document.createElement('div');
+    headerBanner.className="uxd-547-header-banner";
+    logoContainer.className="logo-container";
+   
+    fetch(_this.config.logoSeURL).then(function (res) {
+      return res.text();
+    }).then(function (svg) {
+      logoContainer.insertAdjacentHTML('afterbegin', svg);
+      headerBanner.appendChild(logoContainer);
+     document.querySelector('.signup-cove-position').insertAdjacentElement("beforebegin",headerBanner);
+    });
   },
 
   createContactMedia: function () {
@@ -143,6 +160,7 @@ var UXD547 = {
     });
     this.createBenefits();
     this.createImgBanner();
+ 
     Promise.all([
       fetch(_this.config.benefitsIconsURLs.light),
       fetch(_this.config.benefitsIconsURLs.cloud),
