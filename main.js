@@ -1,9 +1,10 @@
 var UXD547 = {
   config: {
-    bannerPngURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Banner-1180x200.png',
+    isDesktopView: true,
+    bannerPngURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/497113294-1180x200.jpg',
     logoSeURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Logo_White.svg',
     contactsLogosURLs: {
-      apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
+      apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Apple-35x35.svg',
       linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Linkedin-35x35.svg',
       schnider: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
       facebook: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Facebook-35x35.svg',
@@ -49,6 +50,7 @@ var UXD547 = {
   },
 
   insertElementsIntoForm: function () {
+   if(this.moveElementsInNotDesktopVew()){
     var p = document.createElement('p');
     p.textContent = 'Enter your email address to get started';
     p.className = 'UXD-547-paragraph';
@@ -70,12 +72,22 @@ var UXD547 = {
     // Add listener to registration button
     var cb = this.registrationBtnHandler.bind(this);
     registrationBtn.addEventListener('click', cb);
-  },
+  }},
 
   registrationBtnHandler: function () {
     this.nodes.registerLink.click();
   },
-
+  moveElementsInNotDesktopVew: function(){
+    var _this=this;
+    var isDesktopWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 1999;
+    if(isDesktopWidth&&!_this.config.isDesktopView){
+      _this.config.isDesktopView=true;
+      return true
+    } else if (!isDesktopWidth&&_this.config.isDesktopView){
+      _this.config.isDesktopView=false;
+      return false;
+    };
+  },
   createBenefits: function () {
     this.nodes.benefits.innerHTML = '<div class="uxd-547-benefits_container">' +
       '<h2 class="benefits_header">Enjoy all benefits of a Schneider Electric account!</h2>' + ' <div class="benefits_list">' +
@@ -126,6 +138,7 @@ var UXD547 = {
   },
 
   createContactMedia: function () {
+    if(this.moveElementsInNotDesktopVew()){
     var _this = this;
 
     var contactsLInks = document.createElement('ul');
@@ -176,7 +189,7 @@ var UXD547 = {
         });
       });
     });
-  },
+  }},
 
   init: function () {
     if (document.readyState !== 'loading') {
