@@ -1,5 +1,4 @@
-@media only screen and (min-width: 1200px) {
-  li {
+li {
   list-style-type: none;
 }
 
@@ -9,10 +8,12 @@
   margin: 0 auto;
   padding: 0;
 }
-.uxd-547-media{
+
+.uxd-547-media {
   margin: 0px 10px;
   cursor: pointer
 }
+
 div.signin-up.index.login {
   width: 450px;
   padding: 25px 40px;
@@ -89,85 +90,120 @@ div.application-group {
   color: #43B4E6;
   text-decoration: none;
 }
-.uxd-547-benefits_container{
+
+.uxd-547-benefits_container {
   padding-bottom: 30px;
 }
-.benefits_header{
+
+.benefits_header {
   font-weight: bold;
   color: #333333;
   font-size: 24px;
 }
-.benefits_list{
+
+.benefits_list {
   padding-left: 15px;
   padding-top: 30px;
 }
-.benefits_item{
-display: flex;
-align-items: center;
+
+.benefits_item {
+  display: flex;
+  align-items: center;
 }
-.benefits_title{
+
+.benefits_title {
   font-weight: bold;
   color: #333333;
   font-size: 16px;
 }
-.benefits_title>p{
-  
-}
-.benefit-svg{
+
+.benefits_title>p {}
+
+.benefit-svg {
   width: 50px;
   height: 50px;
 }
-.description{
+
+.description {
   padding-left: 30px;
 }
-.lightGreenBar,.darkGreenBar{
-display: none;
+
+.lightGreenBar, .darkGreenBar {
+  display: none;
 }
-div.userlogin-pg.container.mainBgContianer,.signUpPanel{
+
+div.userlogin-pg.container.mainBgContianer, .signUpPanel {
   background: #fafafa;
   background-image: url()!important;
 }
-div.column2.col-sm-5.col-md-5.col-lg-5{
+
+div.column2.col-sm-5.col-md-5.col-lg-5 {
   background: #fafafa;
 }
-div.signUpPanel{
-padding: 20px 0px 90px 0px;
+
+div.signUpPanel {
+  padding: 20px 0px 90px 0px;
 }
-.signup-cove-position{
-padding:0px 70px;
-padding-bottom: 60px;
-padding-top: 30px;
-background: #fafafa;
-bottom:auto;
+
+.signup-cove-position {
+  padding: 0px 70px;
+  padding-bottom: 60px;
+  padding-top: 30px;
+  background: #fafafa;
+  bottom: auto;
 }
-.uxd-547-banner-container{
-padding-bottom: 10px;
+
+.uxd-547-banner-container {
+  padding-bottom: 10px;
 }
-.banner-img{
+
+.banner-img {
   width: 100%;
 }
-.container.footer-note{
+
+.container.footer-note {
   padding: 0px 70px;
 }
-.uxd-547-header-banner{
+
+.uxd-547-header-banner {
   display: flex;
   align-items: center;
   padding: 0px 70px;
   width: 100%;
-  height:90px;
+  height: 90px;
   background: #3DCD58;
   border-bottom: 5px solid #41923e
 }
-.uxd-547-mySchneider{
+
+.uxd-547-mySchneider {
   position: absolute;
   top: 100px;
   left: 170px;
   color: #fff;
 }
-}
-@media only screen and (max-width: 1260px) {
-  .signup-cove-position{
+
+@media only screen and (max-width: 1260px) and (min-width: 1200px) {
+  .signup-cove-position {
     padding: 0px 40px;
     padding-top: 30px;
   }
+}
+
+@media only screen and (max-width:1200px) {
+  .signUpPanel .column1 ,.uxd-547-banner-container{
+    display: none;
+  }
+  .signUpPanel {
+    display: flex;
+    justify-content: center;
+  }
+  div.signin-up.index.login {
+    width: 670px;
+    height: 420px;
+  }
+}
+@media only screen and (max-width: 520px) {
+  div.signin-up.index.login {
+    width: 360px;
+    height: 426px;}
 }
