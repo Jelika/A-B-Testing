@@ -5,7 +5,12 @@
 .uxd-570-brands-tab {
   display: none;
 }
-
+.transparent-background{
+  background :rgba(255,255,255,0.8)!important;
+  -moz-transition: background-color 0.5s ease;
+  -webkit-transition:background-color 0.5s ease;
+  transition:background-color 0.5s ease;
+}
 .overlay-uxd-570 {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.7);
