@@ -149,8 +149,8 @@ var UXD547 = {
         svgs.forEach(function (svg, i) {
           var contactLink = document.createElement('li');
           contactLink.className = 'uxd-547-media';
-          contactLink.innerHTML = _this.config.mediaURLs[i];
-          contactLink.childNodes[0].insertAdjacentHTML('afterbegin', svg);
+         contactLink.innerHTML = _this.config.mediaURLs[i];
+         contactLink.childNodes[0].insertAdjacentHTML('afterbegin', svg);
           contactsLInks.append(contactLink);
         });
       }).then(function () {
