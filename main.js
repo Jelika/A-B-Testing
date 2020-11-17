@@ -212,7 +212,7 @@ var UXD570 = {
     document.querySelector('.sdl-header-se_wrap').classList.toggle('sdl-header-se_wrap-uxd-570');
     document.querySelector('.overlay-uxd-570').classList.toggle('uxd-570-hidden');
     document.querySelector('div .sdl-header-se_wrap').classList.remove('transparent-background');
-    
+
     if (this.config.isMobileSearchSet) {
       document.querySelector('.sdl-header-se_main').classList.toggle('sdl-header-se_main-width_mobile');
       this.hideHeaderBanner();
@@ -266,7 +266,7 @@ var UXD570 = {
       container.insertAdjacentElement('afterend', this.nodes.headerSearch);
 
       this.config.isMobileSearchSet = true;
-    
+
       if (!changedSearchView.classList.contains('sdl-header-se_main-width_mobile') && changedSearchView.classList.contains('sdl-header-se_main-width')) { changedSearchView.classList.add('sdl-header-se_main-width_mobile'); }
       this.hideHeaderBanner();
 
@@ -281,8 +281,8 @@ var UXD570 = {
   },
   hideHeaderBanner: function () {
     var metabarBanner = document.querySelector(this.selectors.metabar);
-    var headerWrap= document.querySelector(this.selectors.headerWrapSelector);
-    if (this.config.isMobileSearchSet){document.querySelector( 'div .sdl-header-se_wrap').classList.remove('transparent-background');}
+    var headerWrap = document.querySelector(this.selectors.headerWrapSelector);
+    if (this.config.isMobileSearchSet) { document.querySelector('div .sdl-header-se_wrap').classList.remove('transparent-background'); }
     if (metabarBanner) {
       if (!this.config.isMobileSearchSet) {
         document.querySelector('.sdl-header-se_search-bar').style.display = "flex";
@@ -290,12 +290,12 @@ var UXD570 = {
       }
       if (!window.scrollY && !this.config.isMobileSearchSet) {
         metabarBanner.style.display = "block";
-        if(headerWrap.classList.contains('transparent-background') && document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden')){
+        if (headerWrap.classList.contains('transparent-background') && document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden')) {
           headerWrap.classList.remove('transparent-background');
         };
       } else {
         metabarBanner.style.display = "none";
-        if(!headerWrap.classList.contains('transparent-background') && document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden') && !this.config.isMobileSearchSet){
+        if (!headerWrap.classList.contains('transparent-background') && document.querySelector('.overlay-uxd-570').classList.contains('uxd-570-hidden') && !this.config.isMobileSearchSet) {
           headerWrap.classList.add('transparent-background');
         };
       }

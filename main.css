@@ -356,3 +356,8 @@ top: -10px!important;
     cursor: pointer;
   }
 }
+@media only screen and (min-width: 719px) and (max-width: 1119px) {
+  div.se-container .se-row{
+    flex-wrap: nowrap;
+  }
+}
