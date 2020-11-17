@@ -3,10 +3,10 @@ var UXD547 = {
     bannerPngURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Banner-1180x200.png',
     logoSeURL: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Logo_White.svg',
     contactsLogosURLs: {
-      apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Apple-35x35.svg',
-      linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Linkedin-35x35.svg',
-      schnider: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/SE_Employee-35x35.svg',
-      facebook: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/Facebook-35x35.svg',
+      apple: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/pngs/Apple-35x35.png',
+      linkedIn: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/pngs/Linkedin-35x35.png',
+      schnider: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/pngs/SE_Employee-35x35.png',
+      facebook: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/pngs/Facebook-35x35.png',
     },
     benefitsIconsURLs: {
       action: 'https://raw.githubusercontent.com/Jelika/A-B-Testing/UXD-547/assets/action_paste-50x50.svg',
@@ -90,8 +90,8 @@ var UXD547 = {
     var _this = this;
     var imgContainer = document.createElement('div');
     var mySchneiderTitleContainer = document.createElement('div');
-    mySchneiderTitleContainer.className="uxd-547-mySchneider";
-    mySchneiderTitleContainer.innerHTML='<h1>mySchneider</h1><p>my account, my personalized experience</p>';
+    mySchneiderTitleContainer.className = "uxd-547-mySchneider";
+    mySchneiderTitleContainer.innerHTML = '<h1>mySchneider</h1><p>my account, my personalized experience</p>';
     imgContainer.append(mySchneiderTitleContainer);
     imgContainer.className = 'uxd-547-banner-container';
 
@@ -100,28 +100,28 @@ var UXD547 = {
       return res.blob();
     }).then(function (png) {
       var bannerImg = document.createElement('img');
-      bannerImg.className="banner-img";
+      bannerImg.className = "banner-img";
       var objURL = URL.createObjectURL(png);
       bannerImg.src = objURL;
       imgContainer.append(bannerImg);
       _this.nodes.mainBanner.prepend(imgContainer);
       _this.createHeader();
     });
-   
+
   },
-  createHeader: function(){
-    var _this=this;
-    var headerBanner=document.createElement('div');
-    var logoContainer=document.createElement('div');
-    headerBanner.className="uxd-547-header-banner";
-    logoContainer.className="logo-container";
-   
+  createHeader: function () {
+    var _this = this;
+    var headerBanner = document.createElement('div');
+    var logoContainer = document.createElement('div');
+    headerBanner.className = "uxd-547-header-banner";
+    logoContainer.className = "logo-container";
+
     fetch(_this.config.logoSeURL).then(function (res) {
       return res.text();
     }).then(function (svg) {
       logoContainer.insertAdjacentHTML('afterbegin', svg);
       headerBanner.appendChild(logoContainer);
-     document.querySelector('.signup-cove-position').insertAdjacentElement("beforebegin",headerBanner);
+      document.querySelector('.signup-cove-position').insertAdjacentElement("beforebegin", headerBanner);
     });
   },
 
@@ -143,14 +143,20 @@ var UXD547 = {
     ]).then(function (responses) {
       Promise.all(
         responses.map(function (res) {
-          return res.text();
+          //return res.text();
+          return res.blob();
         })
       ).then(function (svgs) {
         svgs.forEach(function (svg, i) {
           var contactLink = document.createElement('li');
           contactLink.className = 'uxd-547-media';
-         contactLink.innerHTML = _this.config.mediaURLs[i];
-         contactLink.childNodes[0].insertAdjacentHTML('afterbegin', svg);
+          contactLink.innerHTML = _this.config.mediaURLs[i];
+        
+          var contactImg = document.createElement('img');
+          var objURL = URL.createObjectURL(svg);
+          contactImg.src = objURL;
+          contactLink.childNodes[0].append(contactImg);
+         //  contactLink.childNodes[0].insertAdjacentHTML('afterbegin', svg);
           contactsLInks.append(contactLink);
         });
       }).then(function () {
@@ -160,7 +166,7 @@ var UXD547 = {
     });
     this.createBenefits();
     this.createImgBanner();
- 
+
     Promise.all([
       fetch(_this.config.benefitsIconsURLs.light),
       fetch(_this.config.benefitsIconsURLs.cloud),
