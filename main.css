@@ -1,92 +1,9 @@
-.main>section:first-child:not(.slider):not(.slider-new){
-	margin-top: 0
-}
-.main .uxd-441-section-tabs{
-  padding: 0;
-  width: 100%;
-  margin: 0 auto;
-  display: block;
+div.USC_stickyButtonsWrapper__2-oTJ.toUp {
+  padding-bottom: 120px;
 }
 
-.tabs-container {
-  max-width: 1190px;
-  margin: 0 auto;
-  display: flex;
-
-}
-.tabs-container>div{
-	display: inline-block;
-}
-.tabs-container .uxd-441-category-item__head{
-	cursor: pointer;
-  background-color: #fff;
-  border: 1px solid #e7e6e6;
-  border-top: none;
-  border-left: none;
- 
-}
-.tabs-container .uxd-441-category-item__heading:hover{
-	color: #3dcd58;
-}
-.section-tabs .uxd-441-category-item__heading{
-	font-weight: 400;
-  color: rgb(98,100,105);
-}
-.uxd-441-category-item__head.active{
-	background-color: #fafafa;
-  border-bottom: 2px solid #3dcd58;
-  border-top: none;
-}
-/* .category-item{
-	display: none;
-}
-.category-item.active{
-	display: block;
-} */
-
-/*.category-item__head{
-	display: none
-}
-.category-item__head.active-header{
-	display: block;
-}*/
-
-
-
-@media screen and (max-width: 979px){
-.uxd-441-section-tabs{
-  overflow: hidden;
-  max-height: fit-content;
-}  
-  
-.tabs-container {
-  position: relative;
-  display: flex;
-  /*overflow-x: scroll;
-  padding-bottom: 50px;*/
-}
-.tabs-container .uxd-441-category-item__head{
-  height: 50px;
-  /*width: 100%;*/
-  padding: 4px 10px;
-  background-color: #fff;
-  border: none;
-  border-bottom: 1px solid #e7e6e6;
-  /*border: 1px solid #e7e6e6;*/
-  line-height: 40px;
-  text-align: center;
-  box-sizing: border-box;
-  margin: 5px 5px 0 5px;
-  margin-left: 0;
-}
-.uxd-441-category-item__head.active{
-  background-color: #fafafa;
-  /*border-left: 1px solid #e7e6e6;*/
-  border-bottom: 2px solid #3dcd58;
-  border-top: none;
-  /*margin-left: -2px;*/
+@media screen and (max-width: 600px) {
+  div.USC_stickyButtonsWrapper__2-oTJ.toUp {
+    padding-bottom: 70px;
   }
-  .filters-left-hand-rail.categories.is-opened .category-item.is-active{
-  display: block;
-  } 
 }

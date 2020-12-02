@@ -1,72 +1,53 @@
-var UXD441 = {
-    config: {
-        // linkToAPCHomePage: 'https://www.apc.com/us/en',
-    },
+var APCG16765 = {
+  config: {
+    childList: true,
+    subtree: true,
+    attributes: true,
+  },
 
-    selectors: {
-        allResultsContentSelector: '.se-col-md-12',
-    },
+  selectors: {
+    buttonsWrapperWithChatBotSelector: ".USC_stickyButtonsWrapper__2-oTJ",
+    cookieNotificationSelector: ".sdl-message-cookie-notification",
+  },
+  getNodes: function () {
+    this.nodes = {
+      buttonsWrapperWithChatBot: document.querySelector(
+        this.selectors.buttonsWrapperWithChatBotSelector
+      ),
+      cookieNotification: document.querySelector(
+        this.selectors.cookieNotificationSelector
+      ),
+    };
+  },
 
-    constants: {
-        tabsArray:["Alle Seite", "Produkte", "Unterlagen", "Software", "FAQ"],
-    },
+  replaceChatBot: function () {
+    console.log("===================================================");
+    if (this.nodes.cookieNotification.classList.contains("hide")) {
+      this.nodes.buttonsWrapperWithChatBot.classList.remove("toUp");
+    } else {
+      this.nodes.buttonsWrapperWithChatBot.classList.add("toUp");
+    }
+  },
 
-    getNodes: function () {
-        this.nodes = {
-            allResultsContent: document.querySelector(this.selectors.allResultsContentSelector),
+  setObserverToResultList: function () {
+    var replaceChatBot = this.replaceChatBot.bind(this);
+    var observer = new MutationObserver(replaceChatBot);
 
-        };
-    },
-
-    initTabContainerSection: function () {
-        this.nodes.tabsContainer = document.createElement('section');
-        this.nodes.tabsContainer.className = 'uxd-441-section-tabs';
-        this.nodes.allTabsContainer = document.createElement('div');
-        this.nodes.allTabsContainer.className = 'tabs-container';
-        this.nodes.tabsContainer.append(this.nodes.allTabsContainer);
-        if (!document.querySelector('.tabs-container')) { this.nodes.allResultsContent.insertAdjacentElement('beforebegin', this.nodes.tabsContainer); }
-    },
-    createTabs: function () {
-        this.constants.tabsArray.forEach(function (elem, index) {
-            var tabItem = document.createElement('div');
-            var tabItemInner = document.createElement('h6');
-            tabItemInner.className = 'category-item__heading';
-            tabItemInner.innerText = elem;
-            if (index) {
-                tabItem.className = 'uxd-441-category-item__head';
-            }
-            else tabItem.className = 'uxd-441-category-item__head active';
-            tabItem.append(tabItemInner);
-            this.nodes.allTabsContainer.insertAdjacentElement('beforeend', tabItem);
-        });
-    },
-    // setObserverToResultList: function () {
-    //     var addClassesToResultCards = this.addClassesToResultCards.bind(this);
-    //     var observer = new MutationObserver(addClassesToResultCards);
-
-    //     observer.observe(this.nodes.resultsList, {
-    //         childList: true,
-    //         subtree: true,
-    //     });
-    // },
-
-    init: function () {
-        if (document.readyState !== 'loading') {
-            this.getNodes();
-            this.initTabContainerSection();
-            this.createTabs();
-            // this.setObserverToResultList();
-        } else {
-            var _this = this;
-
-            window.addEventListener('load', function () {
-                _this.getNodes();
-                _this.initTabContainerSection();
-                _this.createTabs();
-                // this.setObserverToResultList();
-            });
-        }
-    },
+    observer.observe(this.nodes.cookieNotification, this.config);
+  },
+  init: function () {
+    if (document.readyState !== "loading") {
+      this.getNodes();
+      this.replaceChatBot();
+      this.setObserverToResultList();
+    } else {
+      var _this = this;
+      window.addEventListener("load", function () {
+        _this.getNodes();
+        _this.replaceChatBot();
+        _this.setObserverToResultList();
+      });
+    }
+  },
 };
-
-UXD441.init();
+APCG16765.init();
