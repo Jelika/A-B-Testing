@@ -46,17 +46,20 @@ aside.se-search-layout-bar {
   font-size: 1rem;
   font-weight: 500;
 }
-div.filter-list_chosen-union,div.category-list-wrap, ul.selected-facets__list,div.selected-facets{
+
+div.filter-list_chosen-union, div.category-list-wrap, ul.selected-facets__list, div.selected-facets {
   display: none;
 }
-div.full-width{
+
+div.full-width {
   width: 100%!important;
 }
+
 .APC-16764-section-tabs .APC-16764-category-item__disable {
   height: 50px;
   padding: 4px 30px;
   background-color: #fff;
-  opacity:.6;
+  opacity: .6;
   text-align: center;
   box-sizing: border-box;
   margin-left: 0;
@@ -100,4 +103,16 @@ div.full-width{
 
 .categories-header {
   box-shadow: none!important;
+}
+
+@media screen and (max-width: 960px) {
+  .APC-16764-section-tabs {
+    margin-top: 10px;
+  }
+  div.filter-list, div.filter-list-wrap__title-wrap {
+    display: none;
+  }
+  div.mobile-list-btn-content.filter-list {
+    display: block;
+  }
 }
