@@ -1,9 +1,13 @@
 .main>section:first-child:not(.slider):not(.slider-new) {
   margin-top: 0
 }
+div.top-message-wrap{
 
+}
 .APC-16764-section-tabs {
   display: flex;
+  max-width: 1180px;
+  padding-top: 12px;
   border-bottom: 1px solid #e7e6e6;
   background-color: #fff;
   font-size: .875rem;
@@ -38,7 +42,7 @@ aside.se-search-layout-bar {
 .APC-16764-section-tabs .APC-16764-category-item__head {
   height: 50px;
   cursor: pointer;
-  padding: 4px 30px;
+  padding: 10px 30px;
   background-color: #fff;
   text-align: center;
   box-sizing: border-box;
@@ -53,6 +57,7 @@ div.filter-list_chosen-union, div.category-list-wrap, ul.selected-facets__list, 
 
 div.full-width {
   width: 100%!important;
+  padding-left: 0px!important;
 }
 
 .APC-16764-section-tabs .APC-16764-category-item__disable {
@@ -108,6 +113,7 @@ div.full-width {
 @media screen and (max-width: 960px) {
   .APC-16764-section-tabs {
     margin-top: 10px;
+    padding-top: 0px
   }
   div.filter-list, div.filter-list-wrap__title-wrap {
     display: none;
