@@ -1,0 +1,22 @@
+.bg_img{
+    display: none;
+   }
+   h1.video-txt{
+   color:#3dcd58;
+   }
+   div.imageHolder, div.img-holder.view.container {
+   height: 500px!important;
+   }
+   div.land-dropdown,.form-control.searchbar, .btn-search.search-btn.btn {
+   border: 2px solid #e1e1e1;
+   background: rgba(255,255,255, 1);
+   }
+   #keywordId-lg{
+   margin-left: 10px;
+   }
+   .container.layer{
+   background: #f1f1f1;
+   }
+   .video-txt-subcontent,div.dropdown-select a, button.btn-search a, input.form-control.searchbar {
+   color:#888;
+   }
