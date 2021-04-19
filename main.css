@@ -1,32 +1,65 @@
-.USC_universalStickyContainer__17-d7.USC_stickyElementsWrapper__tGltN.minimize-width{
-  left: auto;
+.USC_universalStickyContainer__17-d7.minimize-width{
+  left: auto!important;
 }
 
 .styles_comparisonContent__3B6no.minimize-width{
-  width: auto;
+     width: auto!important;
+}
+.styles_comparisonCloseIcon__1ASvb{
+display: none!important;
 }
 
 .styles_comparisonClearLabel__1xC9o.minimize-width,
-.styles_comparisonCloseIcon__1ASvb,
 .minimize_img-wrap.minimize-width,
 .maximize_img-wrap.minimize-width,
-.styles_comparisonActions__1eKHs.minimize-width{
-  display: none;
+div.styles_comparisonActions__1eKHs.minimize-width{
+ display: none!important; 
 }
 .minimize_img-wrap{
-  background-image: none;
+ background-image: url("https://raw.githubusercontent.com/Jelika/A-B-Testing/0387842e6912aa81992442df60fee56a2a917adb/minimize.svg");
+ background-repeat: no-repeat;
+   width: 20px;
+   height: 20px;
+ cursor: pointer;
 }
 .maximize_img-wrap{
-  background-image: none;
+ background-image: url("https://raw.githubusercontent.com/Jelika/A-B-Testing/0387842e6912aa81992442df60fee56a2a917adb/maximize.svg");
+   background-repeat: no-repeat;
+   width: 20px;
+   height: 20px;
+ cursor: pointer;
+ margin-right: 10px;
 }
 
 @media screen and (max-width: 720px) {
-  .maximize_img-wrap {
-    background-image: none;
-  }
-  .styles_comparisonActions__1eKHs.minimize-width,
-  .styles_comparisonClearList__2OLr1.minimize-width
-  {
-    display: none;
-  }
+ .maximize_img-wrap {
+   background-image: url("https://raw.githubusercontent.com/Jelika/A-B-Testing/0387842e6912aa81992442df60fee56a2a917adb/maximize-mobile.svg");
+   width: 25px;
+   height: 25px;
+   margin-right:0;
+ }
+ div.styles_comparisonActions__1eKHs.minimize-width,
+ div.styles_comparisonInfo__1VA2r.styles_comparisonClearList__2OLr1.minimize-width,
+ .styles_comparisonClearList__2OLr1.minimize-width
+ {
+   display: none!important;
+ }
+ .styles_productCount__2z-Ql.minimize-width{
+   position: relative;
+   bottom: 10px;
+ }
+ div.USC_stickyElementsWrapper__tGltN.minimize-width{
+   width: 50px;
+   height: 50px;
+   position: relative;
+   left: 15px;
+   bottom: 10px;
+ }
+ div.styles_comparisonCount__2567X.minimize-width{
+ margin:0;
+ }
+ 
+ div.styles_WidgetContainerWrap__3aOwI.minimize-width{
+height: 50px;
+ }
 }
